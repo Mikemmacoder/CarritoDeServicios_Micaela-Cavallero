@@ -21,13 +21,12 @@ while (personas <= 0 || isNaN(personas)) {
 }
 
 // Cálculo del costo
+let resultado;
 if (personas <= 2 ) {
-    let resultado = encuentros * horas * precioHora;
-    alert('El costo total del servicio es de ${"$" + resultado}.');
-    alert('La presente cotización es a fines estimativos y está sujeta a modificaciones sin previo aviso.');
+    resultado = encuentros * horas * precioHora;
 } else {
-    let resultado = encuentros * horas * precioHora + (500 * personas);
-    alert('El costo total del servicio es de ${ "$" + resultado}');
-    alert('La presente cotización es a fines estimativos y está sujeta a modificaciones sin previo aviso.');
+    resultado = encuentros * horas * precioHora + (500 * personas);
 }
+alert(`El costo total del servicio es de ${"$" + resultado}.`);
+alert('La presente cotización es a fines estimativos y está sujeta a modificaciones sin previo aviso.');
 
