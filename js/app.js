@@ -1,8 +1,8 @@
-/* const modalidadServicio = ['Presencial', 'Virtual']; */
 let valorTotal = 0;
 let precios = 0;
 let botonVaciar = document.getElementById('vaciar-carrito-btn');
 let carrito = [];
+const servicios = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     let carritoLocal = JSON.parse(localStorage.getItem('carrito'));
@@ -12,45 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarItemsCarrito();
 });
 
-/* class Servicios {
-    constructor(id, nombre, modalidad, duracion, minimo, precio) {
-        this.id = id;
-        this.nombre = nombre;
-        this.modalidad = modalidad;
-        this.duracion = duracion;
-        this.minimo = minimo;
-        this.precio = precio
-    }
-    mostrarServicio() {
-        alert(this.id + '-' + this.nombre + ' se realiza en las modalidades ' + this.modalidad + '.\n' +
-            'Cada encuentro tiene una duración de ' + this.duracion + ' hora(s)\n' +
-            'El mínimo de encuentros a contratar son ' + this.minimo);
-    }
-
-}
-const servicio1 = new Servicios(1, 'Coaching personal', modalidadServicio, 1, 3, 4000);
-const servicio2 = new Servicios(2, 'Coaching de parejas', modalidadServicio, 1, 3, 6000);
-const servicio3 = new Servicios(3, 'Coaching grupal', modalidadServicio, 4, 3, 30000);
-
-const servicios = [servicio1, servicio2, servicio3]; */
-/* const guardarLocal = (clave, valor) => { localStorage.setItem(clave, valor) };
-
-// o almacenar array completo
-guardarLocal("listaServicios", JSON.stringify(servicios)); */
-const servicios = [];
-
-fetch("js/servicios.json") // Ruta relativa al archivo "servicios.json"
+fetch("js/servicios.json")
     .then((response) => response.json())
     .then((data) => {
-        // Aquí puedes utilizar los datos obtenidos del archivo "servicios.json"
         console.log(data);
+        //Traigo los objetos del json a un array en js 
         for (let servicio of data) {
             servicios.push(servicio)
         }
-        console.log("servicios" + servicios)
 
-        // Resto de tu código para procesar los datos
-        // ...
+        // Creo tarjetas por cada servicio
         let articuloCartas = document.getElementById('cartas');
         for (let servicio of data) {
             let carta = document.createElement('div');
@@ -65,17 +36,24 @@ fetch("js/servicios.json") // Ruta relativa al archivo "servicios.json"
         </div>`;
             articuloCartas.append(carta);
         }
-
+        //Tomo control de los botones html
         let boton1 = document.getElementById('btn1');
         let boton2 = document.getElementById('btn2');
         let boton3 = document.getElementById('btn3');
-
+        //Muestro el resultado total de la compra en html
         const resultado = document.getElementById('total');
         resultado.innerHTML = `<h3>Total $0</h3>`;
-
+        //Eventos para que al clickear el boton, se agreguen los servicios al carrito
         boton1.addEventListener("click", () => {
             carrito.push(servicios[0]);
-            alert('Se agregó el servicio al carrito!');
+            Swal.fire(
+                {
+                    title: 'Se agregó el servicio al carrito!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                }
+            );
             console.table(carrito);
             mostrarItemsCarrito();
             calcularTotal()
@@ -83,7 +61,14 @@ fetch("js/servicios.json") // Ruta relativa al archivo "servicios.json"
         });
         boton2.addEventListener("click", () => {
             carrito.push(servicios[1]);
-            alert('Se agregó el servicio al carrito!');
+            Swal.fire(
+                {
+                    title: 'Se agregó el servicio al carrito!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                }
+            );
             console.table(carrito);
             mostrarItemsCarrito();
             calcularTotal()
@@ -91,19 +76,19 @@ fetch("js/servicios.json") // Ruta relativa al archivo "servicios.json"
         });
         boton3.addEventListener("click", () => {
             carrito.push(servicios[2]);
-            alert('Se agregó el servicio al carrito!');
+            Swal.fire(
+                {
+                    title: 'Se agregó el servicio al carrito!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                }
+            );
             console.table(carrito);
             mostrarItemsCarrito();
             calcularTotal()
             guardarCarrito()
         });
-
-
-
-
-
-
-
 
     })
     .catch((error) => {
@@ -111,7 +96,7 @@ fetch("js/servicios.json") // Ruta relativa al archivo "servicios.json"
         console.error("Error al obtener los datos del archivo servicios.json:", error);
     });
 
-
+//funciones utilizadas al momento de agregar servicios al carrito
 
 function mostrarItemsCarrito() {
     const tabla = document.getElementById('items');
@@ -141,10 +126,11 @@ function calcularTotal() {
     resultado.innerHTML += `
         <h3>Total $ ${valorTotal}</h3>`
 }
+//almacenar el carrito en el localStorage
 function guardarCarrito() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
-
+//evento de vaciar carrito alclickear boton
 botonVaciar.addEventListener("click", () => {
     document.getElementById('items').innerHTML = ``;
     carrito = [];
@@ -153,4 +139,10 @@ botonVaciar.addEventListener("click", () => {
     const resultado = document.getElementById('total');
     resultado.innerHTML = `
     <h3>Total $0</h3>`;
+    Swal.fire(
+        {
+            title: 'El carrito está vacío!',
+            icon: 'warning'
+        }
+    );
 });
