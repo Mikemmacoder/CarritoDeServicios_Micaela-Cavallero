@@ -33,11 +33,29 @@ const servicio2 = new Servicios(2, 'Coaching de parejas', modalidadServicio, 1, 
 const servicio3 = new Servicios(3, 'Coaching grupal', modalidadServicio, 4, 3, 30000);
 
 const servicios = [servicio1, servicio2, servicio3];
+/* const guardarLocal = (clave, valor) => { localStorage.setItem(clave, valor) };
+
+// o almacenar array completo
+guardarLocal("listaServicios", JSON.stringify(servicios)); */
+
+fetch("servicios.json") // Ruta relativa al archivo "servicios.json"
+    .then((response) => response.json())
+    .then((data) => {
+        // Aquí puedes utilizar los datos obtenidos del archivo "servicios.json"
+        console.log(data);
+
+        // Resto de tu código para procesar los datos
+        // ...
+    })
+    .catch((error) => {
+        // Manejo de errores en caso de que no se pueda acceder al archivo "servicios.json"
+        console.error("Error al obtener los datos del archivo servicios.json:", error);
+    });
 
 let articuloCartas = document.getElementById('cartas');
-for (servicio of servicios) {
+for (let servicio of servicios) {
     let carta = document.createElement('div');
-    carta.className = 'card col-md-4';
+    carta.className = 'card col-md-3 col-sm-5 cartaServicio';
     carta.innerHTML = `
         <div class="card-body">
             <h5 class="card-title">${servicio.nombre}</h5>

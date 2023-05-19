@@ -1,6 +1,25 @@
 /*HEADER*/
-
-h1 {
+.navbar {
+    height: 110px;
+    padding: 30px 70px;
+    display: flex;
+    justify-content: space-between;
+}
+.empresa {
     color: rgb(6, 0, 83);
     letter-spacing: 0.15rem;
+    font-size: 40px;
+}
+h1 {
+    text-align: center;
+    color: rgb(6, 0, 83);
+    padding: 20px;
+}
+.articleCarta{
+    display: flex;
+    justify-content: space-evenly;
+}
+.cartaServicio{
+    margin: 5px;
+    background-color: azure;
 }
