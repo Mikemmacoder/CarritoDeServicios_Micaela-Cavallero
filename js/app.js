@@ -27,12 +27,13 @@ fetch("js/servicios.json")
             let carta = document.createElement('div');
             carta.className = 'card col-md-3 col-sm-5 cartaServicio';
             carta.innerHTML = `
-        <div class="card-body">
+            <div class="card-body">
             <h5 class="card-title">${servicio.nombre}</h5>
+            <img src="${servicio.imagen}" class="card-img-top">
             <p class="card-text">${'Modalidades: ' + servicio.modalidad}</p>
             <p class="card-text">${'Duración: ' + servicio.duracion + ' hora(s).'}<p>
             <p class="card-text">Precio por encuentro $ ${servicio.precio}</p>
-            <button id="btn${servicio.id}" class="btn btn-primary comprar">Comprar</button>
+            <button id="btn${servicio.id}" class="btn btn-primary comprar">Agregar al carrito</button>
         </div>`;
             articuloCartas.append(carta);
         }
@@ -146,3 +147,14 @@ botonVaciar.addEventListener("click", () => {
         }
     );
 });
+
+let graficoCarrito = document.getElementById('graficoCarrito');
+let graficoCarri = document.createElement('div');
+graficoCarri.className = 'carroNum';
+graficoCarri.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+    class="bi bi-cart4" viewBox="0 0 16 16">
+    <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+    </svg>
+    <p class="card-text">${carrito.length}</p>`;
+    graficoCarrito.append(graficoCarri);
