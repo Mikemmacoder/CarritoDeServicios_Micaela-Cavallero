@@ -13,11 +13,15 @@
 
 <body>
     <header class="header">
-        <nav class="navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar-expand-lg bg-body-secondary">
             <div class="navbar">
-                <a class="navbar-brand empresa" href="#">IKIGAI</a>
-                <ul class="navbar-nav" id="graficoCarrito">
-                    <li class="nav-item" >
+                <h1><a class="navbar-brand empresa" href="#">IKIGAI</a></h1>
+                <ul class="navbar-nav navegacion">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="graficoCarrito" href="#cajaCarrito"></a>
                     </li>
                 </ul>
             </div>
@@ -25,7 +29,7 @@
     </header>
 
     <main class="container">
-        <h1>Servicios</h1>
+        <h2>Servicios</h2>
         <section id="principal">
             <article id="inferior">
                 <!-- Aqui tabla -->
@@ -36,37 +40,42 @@
         </section>
         <aside>
 
-            <div id="carrito">
+            <div class="container" id="cajaCarrito">
                 <h2>Carrito de compras</h2>
                 <table class="table table-success table-striped">
                     <thead class="thead-dark">
                         <tr id="trId">
                             <th># item</th>
                             <th>Nombre</th>
-                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Precio unitario</th>
+                            <th>Precio parcial</th>
                         </tr>
                     </thead>
                     <tbody id="items" class="table-striped">
                     </tbody>
                     <tfoot>
                         <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <th id="total"></th>
                         </tr>
                     </tfoot>
                 </table>
-                <div id="total"></div>
-            </div>
-            <button id="comprar-btn" class="btn btn-primary">Comprar todo</button>
-            <button id="vaciar-carrito-btn" class="btn btn-primary">Vaciar carrito</button>
+                <div class="botones">
+                    <button id="comprar-btn" class="btn btn-primary">Comprar todo</button>
+                    <button id="vaciar-carrito-btn" class="btn btn-primary">Vaciar carrito</button>
+                </div>
             </div>
 
         </aside>
-        
     </main>
     <footer class="text-bg-secondary p-3 ">
         <div class="container">
-            <p class="m-0 text-center text-white">
-                Copyright Micaela Cavallero 2023
+            <p class="m-0 text-center text-white copyright">
+                &copy Copyright Micaela Cavallero 2023
             </p>
         </div>
     </footer>
