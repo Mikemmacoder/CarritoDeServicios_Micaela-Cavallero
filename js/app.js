@@ -1,4 +1,5 @@
 let valorTotal = 0;
+let precioParcial = 0;
 let precios = 0;
 let botonVaciar = document.getElementById('vaciar-carrito-btn');
 let botonComprar = document.getElementById('comprar-btn');
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     mostrarItemsCarrito();
     mostrarContadorCarrito();
+    calcularTotal();
 });
 
 fetch("js/servicios.json")
@@ -48,7 +50,7 @@ fetch("js/servicios.json")
         resultado.innerHTML = `<h3>Total $0</h3>`;
         //Eventos para que al clickear el boton, se agreguen los servicios al carrito
         boton1.addEventListener("click", () => {
-            carrito.push(servicios[1]);
+            const nombre1 = carrito.find((el) => el.nombre === servicios[0].nombre) ? servicios[0].cantidad++ : carrito.push(servicios[0]);
             Swal.fire(
                 {
                     title: 'Se agregó el servicio al carrito!',
@@ -57,14 +59,13 @@ fetch("js/servicios.json")
                     timer: 1500,
                 }
             );
-            console.table(carrito);
             mostrarItemsCarrito();
             calcularTotal()
             guardarCarrito()
             mostrarContadorCarrito();
         });
         boton2.addEventListener("click", () => {
-            carrito.push(servicios[1]);
+            const nombre2 = carrito.find((el) => el.nombre === servicios[1].nombre) ? servicios[1].cantidad++ : carrito.push(servicios[1]);
             Swal.fire(
                 {
                     title: 'Se agregó el servicio al carrito!',
@@ -73,14 +74,13 @@ fetch("js/servicios.json")
                     timer: 1500,
                 }
             );
-            console.table(carrito);
             mostrarItemsCarrito();
             calcularTotal()
             guardarCarrito()
             mostrarContadorCarrito();
         });
         boton3.addEventListener("click", () => {
-            carrito.push(servicios[2]);
+            const nombre3 = carrito.find((el) => el.nombre === servicios[2].nombre) ? servicios[2].cantidad++ : carrito.push(servicios[2]);
             Swal.fire(
                 {
                     title: 'Se agregó el servicio al carrito!',
@@ -89,7 +89,6 @@ fetch("js/servicios.json")
                     timer: 1500,
                 }
             );
-            console.table(carrito);
             mostrarItemsCarrito();
             calcularTotal()
             guardarCarrito()
@@ -103,62 +102,44 @@ fetch("js/servicios.json")
     });
 
 //funciones utilizadas al momento de agregar servicios al carrito
-/* function agregarServicios(i){
-    carrito.find ((el) => el.nombre === servicios[i].nombre) ? el.cantidad ++ : carrito.push(servicios[i]);
-    Swal.fire(
-        {
-            title: 'Se agregó el servicio al carrito!',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-        }
-    );
-    console.table(carrito);
-    mostrarItemsCarrito();
-    calcularTotal();
-    guardarCarrito();
-    mostrarContadorCarrito();
-} */
-
 
 function mostrarItemsCarrito() {
     const tabla = document.getElementById('items');
     tabla.innerHTML = ``;
     let counter = 1;
-
+    
     carrito.forEach((servicio) => {
+        precioParcial = servicio.cantidad * servicio.precio;
         tabla.innerHTML += `
             <tr id='pepino'>
                 <th>${counter}</th>
                 <td> ${servicio.nombre} </td>
                 <td>${servicio.cantidad}</td>
                 <td>$ ${servicio.precio} </td>
-                <td>$</td>
+                <td>$ ${precioParcial}</td>
             </tr>
         `;
         counter++;
-        console.log(tabla.innerHTML);
     });
 }
-function calcularPrecioParcial(a,b){
-    return a *b;
-}
-function calcularTotal() {
-    let serTotal = carrito.map((servicio) => servicio.precio)
-    console.log(serTotal);
-    valorTotal = serTotal.reduce((acumulador, elemento) => acumulador + elemento, 0)
 
+function calcularTotal() {
+    valorTotal = 0;
+    carrito.forEach((servicio) => {
+        precioParcial = servicio.cantidad * servicio.precio;
+        valorTotal += precioParcial;
+    });
     const resultado = document.getElementById('total');
-    resultado.innerHTML = ``;
+    resultado.innerHTML = '';
     resultado.innerHTML += `
-        <h3>Total $ ${valorTotal}</h3>`
+        <h3>Total $ ${valorTotal}</h3>`;
 }
 //almacenar el carrito en el localStorage
 function guardarCarrito() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
-function vaciarCarrito(){
+function vaciarCarrito() {
     document.getElementById('items').innerHTML = ``;
     carrito = [];
     localStorage.clear();
@@ -167,17 +148,18 @@ function vaciarCarrito(){
     resultado.innerHTML = `
     <h3>Total $0</h3>`;
     mostrarContadorCarrito();
-}
-//evento de vaciar carrito alclickear boton
-botonVaciar.addEventListener("click", () => {
-    vaciarCarrito();
     Swal.fire(
         {
             title: 'El carrito está vacío!',
             icon: 'warning'
         }
     );
+}
+//evento de vaciar carrito alclickear boton
+botonVaciar.addEventListener("click", () => {
+    vaciarCarrito();
 });
+
 //Crear boton carrito y funcion para mostrar el numero de items
 let graficoCarrito = document.getElementById('graficoCarrito');
 let graficoCarri = document.createElement('button');
@@ -199,7 +181,14 @@ function mostrarContadorCarrito() {
 }
 
 //evento de comprar
-botonComprar.addEventListener("click", () =>{
-    carrito.length > 0 ?  Swal.fire({title: 'La compra se realizó con éxito!', text: 'El total de la compra finalizada fue de $' + valorTotal, icon: 'success'}) : Swal.fire({title: 'El carrito está vacío!', text: 'Seleccione los servicios a contratar.', icon: 'warning'});
-    vaciarCarrito();
+botonComprar.addEventListener("click", () => {
+    carrito.length > 0 ? Swal.fire({ title: 'La compra se realizó con éxito!', text: 'El total de la compra finalizada fue de $' + valorTotal, icon: 'success' }) : Swal.fire({ title: 'El carrito está vacío!', text: 'Seleccione los servicios a contratar.', icon: 'warning' });
+    document.getElementById('items').innerHTML = ``;
+    carrito = [];
+    localStorage.clear();
+    valorTotal = 0;
+    const resultado = document.getElementById('total');
+    resultado.innerHTML = `
+    <h3>Total $0</h3>`;
+    mostrarContadorCarrito();
 });
