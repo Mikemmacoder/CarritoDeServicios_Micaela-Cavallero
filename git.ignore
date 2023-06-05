@@ -1,0 +1,8 @@
+Podrías darle funcionalidad al boton de comprar en donde el usuario tenga que ingresar sus datos personales y luego de validarlos, mostrar un cartel de compra finalizada y limpiar el carrito.
+Podrías agregar botones para que el usuario pueda quitar servicios dentro del carrito de forma individual.
+
+--------------
+
+LISTO
+Nueva ventana con carrito, elementos, subtotal y boton de comprar*/
+Recuerda calcular el precio total de los servicios recuperados desde el localStorage.

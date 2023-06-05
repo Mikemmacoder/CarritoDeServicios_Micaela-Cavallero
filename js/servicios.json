@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nombre": "Coaching personal",
+        "modalidad": "Presencial y virtual",
+        "duracion": 1,
+        "minimo": 3,
+        "precio": 4000,
+        "imagen": "img/coaching.personal.hombre2.jpg",
+        "cantidad": 1
+    },
+    {
+        "id": 2,
+        "nombre": "Coaching de parejas",
+        "modalidad": "Presencial y virtual",
+        "duracion": 1,
+        "minimo": 3,
+        "precio": 6000,
+        "imagen": "img/img.coaching.de.pareja2.jpg",
+        "cantidad": 1
+    },
+    {
+        "id": 3,
+        "nombre": "Coaching grupal",
+        "modalidad": "Presencial y virtual",
+        "duracion": 4,
+        "minimo": 3,
+        "precio": 30000,
+        "imagen": "img/img.coachingequipo2.jpg",
+        "cantidad": 1
+    }
+]
